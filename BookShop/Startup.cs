@@ -1,4 +1,5 @@
 using BookShop.Models;
+using BookShop.Repo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,7 @@ namespace BookShop
                 options.EnableSensitiveDataLogging(true);
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
             });
+            services.AddSingleton<IRepository, DataRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
