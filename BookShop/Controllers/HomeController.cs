@@ -1,4 +1,5 @@
 ﻿using BookShop.Models;
+using BookShop.Repo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,22 +13,24 @@ namespace BookShop.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly DataContext _ctx;
+        private readonly IRepository _repo;
 
-        public HomeController(ILogger<HomeController> logger, DataContext ctx)
+        public HomeController(ILogger<HomeController> logger, IRepository repo)
         {
             _logger = logger;
-            _ctx = ctx;
+            _repo = repo;
         }
 
         public IActionResult Index()
         {
-            return View(_ctx.Books);
+            return View(_repo.Books);
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public IActionResult AddBook(Book book)
         {
-            return View();
+            _repo.AddBook(book);
+            return RedirectToAction(nameof(Index));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
