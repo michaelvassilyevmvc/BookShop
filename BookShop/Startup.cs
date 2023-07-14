@@ -30,7 +30,7 @@ namespace BookShop
                 options.EnableSensitiveDataLogging(true);
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
             });
-            services.AddSingleton<IRepository, DataRepository>();
+            services.AddTransient<IRepository, DataRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
