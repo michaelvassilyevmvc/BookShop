@@ -7,5 +7,7 @@ namespace BookShop.Repo
     {
         IEnumerable<Book> Books { get; }
         void AddBook(Book book);
+        Book GetBook(int key);
+        void UpdateBook(Book book);
     }
 }
