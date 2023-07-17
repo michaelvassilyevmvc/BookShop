@@ -9,5 +9,7 @@ namespace BookShop.Repo
         void AddBook(Book book);
         Book GetBook(int key);
         void UpdateBook(Book book);
+        void UpdateAll(Book[] books);
+        void DeleteBook(Book book);
     }
 }
