@@ -31,6 +31,7 @@ namespace BookShop
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
             });
             services.AddTransient<IRepository, DataRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
