@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Book>
+
+<div class="row">
+    <div class="col-1 font-weight-bold">Id</div>
+    <div class="col font-weight-bold">Title</div>
+    <div class="col font-weight-bold">Price</div>
+    <div class="col font-weight-bold">Retail Price</div>
+    <div class="col font-weight-bold">Category</div>
+    <div class="col font-weight-bold">Published On</div>
+    <div class="col"></div>
+</div>
+@{int i = 0;}
+<form asp-action="UpdateAll" method="post">
+    @foreach(Book b in Model)
+    {
+        <div class="row p-2">
+            <div class="col-1">
+                @b.Id
+                <input type="hidden" name="Books[@i].Id" value="@b.Id" />
+            </div>
+            <div class="col">
+                <input name="Books[@i].Title" class="form-control" value="@b.Title" />
+            </div>
+            <div class="col">
+                <input name="Books[@i].Price" class="form-control" value="@b.Price" />
+            </div>
+            <div class="col">
+                <input name="Books[@i].RetailPrice" class="form-control" value="@b.RetailPrice" />
+            </div>
+            <div class="col">
+                <input name="Books[@i].Category" class="form-control" value="@b.Category" />
+            </div>
+            <div class="col">
+                <input name="Books[@i].PublishedOn" class="form-control" value="@b.PublishedOn.ToShortDateString()" />
+            </div>
+            
+        </div>
+        i++;
+    }
+    <div class="col">
+        <button type="submit" class="btn btn-primary">Save All</button>
+        <a asp-action="Index" class="btn btn-outline-primary">Cancel</a>
+    </div>
+</form>
