@@ -1,6 +1,7 @@
 ﻿using BookShop.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookShop.Repo
 {
@@ -10,7 +11,7 @@ namespace BookShop.Repo
 
         public DataRepository(DataContext context) => _context = context;
 
-        public IEnumerable<Book> Books => _context.Books.ToArray();
+        public IEnumerable<Book> Books => _context.Books.Include(x => x.Category);
 
         public void AddBook(Book book)
         {
@@ -24,7 +25,7 @@ namespace BookShop.Repo
             _context.SaveChanges();
         }
 
-        public Book GetBook(int key) => _context.Books.Find(key);
+        public Book GetBook(int key) => _context.Books.Include(x => x.Category).First(x=>x.Id == key);
 
         public void UpdateAll(Book[] books)
         {

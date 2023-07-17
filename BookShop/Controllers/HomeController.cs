@@ -10,11 +10,13 @@ namespace BookShop.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IRepository _repo;
+        private readonly ICategoryRepository _catRepo;
 
-        public HomeController(ILogger<HomeController> logger, IRepository repo)
+        public HomeController(ILogger<HomeController> logger, IRepository repo, ICategoryRepository catRepo)
         {
             _logger = logger;
             _repo = repo;
+            _catRepo = catRepo;
         }
 
         public IActionResult Index()
@@ -34,13 +36,22 @@ namespace BookShop.Controllers
         [HttpGet]
         public IActionResult UpdateBook(int key)
         {
-            return View(_repo.GetBook(key));
+            ViewBag.Categories = _catRepo.Categories;
+            return View(key == 0 ? new Book() : _repo.GetBook(key));
         }
 
         [HttpPost]
         public IActionResult UpdateBook(Book book)
         {
-            _repo.UpdateBook(book);
+            if(book.Id == 0)
+            {
+                _repo.AddBook(book);
+            }
+            else
+            {
+                _repo.UpdateBook(book);
+            }
+            
             return RedirectToAction(nameof(Index));
         }
 

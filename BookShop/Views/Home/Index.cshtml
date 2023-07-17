@@ -7,8 +7,7 @@
 <h3 class="p-2 bg-primary text-white text-center">Books</h3>
 
 <div class="container-fluid mt-3">
-    @if (ViewBag.UpdateAll != true)
-    {
+    
         <div class="row">
             <div class="col-1 font-weight-bold">Id</div>
             <div class="col font-weight-bold">Title</div>
@@ -18,30 +17,7 @@
             <div class="col font-weight-bold">Published On</div>
             <div class="col"></div>
         </div>
-        <form asp-action="AddBook" method="post">
-            <div class="row p-2">
-                <div class="col-1"></div>
-                <div class="col">
-                    <input name="Title" class="form-control" />
-                </div>
-                <div class="col">
-                    <input name="Price" class="form-control" />
-                </div>
-                <div class="col">
-                    <input name="RetailPrice" class="form-control" />
-                </div>
-                <div class="col">
-                    <input name="Category" class="form-control" />
-                </div>
-                <div class="col">
-                    <input name="PublishedOn" class="form-control" />
-                </div>
-                <div class="col">
-                    <button type="submit" class="btn btn-primary">Add</button>
-                </div>
-            </div>
-        </form>
-        <div>
+        
             @if (Model.Count() == 0)
             {
                 <div class="row">
@@ -57,7 +33,7 @@
                         <div class="col">@b.Title</div>
                         <div class="col">@b.Price</div>
                         <div class="col">@b.RetailPrice</div>
-                        <div class="col">@b.Category</div>
+                        <div class="col">@b.Category.Name</div>
                         <div class="col">@b.PublishedOn.ToShortDateString()</div>
                         <div class="col">
                             <form asp-action="Delete" method="post">
@@ -70,12 +46,8 @@
                 }
 
             }
+        <div class="text-center p-2">
+            <a asp-action="UpdateBook" asp-route-key="0" class="btn btn-primary">Add</a>
         </div>
-        <div class="text-center">
-            <a asp-action="UpdateAll" class="btn btn-primary">Edit All</a>
-        </div>
-    } else
-    {
-        @Html.Partial("InlineEditor",Model)
-    }
+    
 </div>
