@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using BookShop.Models.Pages;
 
 namespace BookShop.Repo
 {
@@ -26,6 +27,11 @@ namespace BookShop.Repo
         }
 
         public Book GetBook(int key) => _context.Books.Include(x => x.Category).First(x=>x.Id == key);
+
+        public PagedList<Book> GetBooks(QueryOptions options)
+        {
+            return new PagedList<Book>(_context.Books.Include(b => b.Category), options);
+        }
 
         public void UpdateAll(Book[] books)
         {
