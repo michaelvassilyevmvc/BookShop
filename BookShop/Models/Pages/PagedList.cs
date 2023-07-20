@@ -52,16 +52,24 @@ namespace BookShop.Models.Pages
             return query.Where(lambda);
         }
 
-        private static IQueryable<T> Order(IQueryable<T> query, string propertyName, bool desc)
+        private static IQueryable<T> Order(IQueryable<T> query, string propertyName,
+                bool desc)
         {
             var parameter = Expression.Parameter(typeof(T), "x");
+
             var source = propertyName.Split('.').Aggregate((Expression)parameter, Expression.Property);
-            var lambda = Expression.Lambda(typeof(Func<,>).MakeGenericType(typeof(T), source.Type), source, parameter);
-            return typeof(Queryable).GetMethods().Single(method => method.Name == (desc ? "OrderByDescending":"OrderBy")
-                && method.IsGenericMethodDefinition && method.GetGenericArguments().Length == 2
-                && method.GetParameters().Length == 2)
-                .MakeGenericMethod(typeof(T), source.Type)
-                .Invoke(null, new object[] { query, lambda}) as IQueryable<T>;
+
+            var lambda = Expression.Lambda(typeof(Func<,>).MakeGenericType(typeof(T),
+                source.Type), source, parameter);
+
+            return typeof(Queryable).GetMethods().Single(
+                      method => method.Name == (desc ? "OrderByDescending"
+                                  : "OrderBy")
+                      && method.IsGenericMethodDefinition
+                      && method.GetGenericArguments().Length == 2
+                      && method.GetParameters().Length == 2)
+                  .MakeGenericMethod(typeof(T), source.Type)
+                  .Invoke(null, new object[] { query, lambda }) as IQueryable<T>;
         }
     }
 }

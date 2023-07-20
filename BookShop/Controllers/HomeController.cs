@@ -1,4 +1,5 @@
 ﻿using BookShop.Models;
+using BookShop.Models.Pages;
 using BookShop.Repo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,10 +20,10 @@ namespace BookShop.Controllers
             _catRepo = catRepo;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(QueryOptions options)
         {
             //Console.Clear();
-            return View(_repo.Books);
+            return View(_repo.GetBooks(options));
         }
 
 

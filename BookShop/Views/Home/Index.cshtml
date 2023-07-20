@@ -6,6 +6,15 @@
 
 <h3 class="p-2 bg-primary text-white text-center">Books</h3>
 
+<div class="text-center">
+    @Html.Partial("Pages",Model)
+    @{
+        ViewBag.searches = new string[] { "Title", "Category.Name" };
+        ViewBag.sorts = new string[] { "Title", "Category.Name", "Price", "RetailPrice" };
+    }
+    @Html.Partial("PageOptions",Model)
+</div>
+
 <div class="container-fluid mt-3">
     
         <div class="row">
