@@ -1,0 +1,23 @@
+﻿@model IEnumerable<User>
+
+<h1 class="bg-primary p-2 text-white text-center">Users List</h1>
+
+<div class="row">
+    <div class="col font-weight-bold text-center">Id</div>
+    <div class="col font-weight-bold text-center">Login</div>
+    <div class="col font-weight-bold text-center">Password</div>
+    <div class="col font-weight-bold text-center">Email</div>
+</div>
+@if(Model.Count() == 0){
+    <div class="p-2 text-center">User list is empty</div>
+} else {
+    @foreach (User u in Model)
+    {
+        <div class="row pt-2">
+            <div class="col text-center">@u.Id</div>
+            <div class="col text-center">@u.Login</div>
+            <div class="col text-center">@u.Password</div>
+            <div class="col text-center">@u.Email</div>
+        </div>
+    }
+}

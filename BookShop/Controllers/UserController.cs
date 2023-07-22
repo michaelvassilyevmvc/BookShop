@@ -1,18 +1,21 @@
 ﻿using BookShop.Models;
+using BookShop.Models.Pages;
 using BookShop.Repo;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookShop.Controllers
 {
-    public class UserController:Controller
+    public class UsersController:Controller
     {
         private readonly IUserRepository _userRepository;
 
-        public UserController(IUserRepository userRepository)
+        public UsersController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
+
+        public IActionResult Index(QueryOptions options) => View(_userRepository.GetUsers(options));
 
         public IActionResult Register()
         {

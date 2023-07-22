@@ -1,4 +1,5 @@
 ﻿using BookShop.Models;
+using BookShop.Models.Pages;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,10 +26,10 @@ namespace BookShop.Repo
             _context.Users.Remove(user);
         }
 
-        public User Get(string login, string password)
-        {
-            return _context.Users.SingleOrDefault(x => x.Login == login && x.Password == password);
-        }
+        public User Get(string login, string password) => _context.Users.SingleOrDefault(x => x.Login == login && x.Password == password);
+
+        public PagedList<User> GetUsers(QueryOptions options) => new PagedList<User>(_context.Users, options);
+        
 
         public void Update(User user)
         {
