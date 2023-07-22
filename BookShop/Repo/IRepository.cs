@@ -7,7 +7,7 @@ namespace BookShop.Repo
     public interface IRepository
     {
         IEnumerable<Book> Books { get; }
-        PagedList<Book> GetBooks(QueryOptions options);
+        PagedList<Book> GetBooks(QueryOptions options, int categoryId = 0);
         void AddBook(Book book);
         Book GetBook(int key);
         void UpdateBook(Book book);

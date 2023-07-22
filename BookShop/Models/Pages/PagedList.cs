@@ -34,13 +34,13 @@ namespace BookShop.Models.Pages
                 }
             }
 
-            Stopwatch sw = Stopwatch.StartNew();
-            Console.Clear();
+            //Stopwatch sw = Stopwatch.StartNew();
+            //Console.Clear();
 
             TotalPages = query.Count() / PageSize;
             AddRange(query.Skip((CurrentPage - 1) * PageSize).Take(PageSize));
 
-            Console.WriteLine($"Query time:{sw.ElapsedMilliseconds} ms");
+            //Console.WriteLine($"Query time:{sw.ElapsedMilliseconds} ms");
         }
 
         private static IQueryable<T> Search(IQueryable<T> query, string propertyName, string searchTerm)

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BookShop.Models;
+using BookShop.Models.Pages;
 
 namespace BookShop.Repo
 {
@@ -30,6 +31,11 @@ namespace BookShop.Repo
         {
             _context.Categories.Update(category);
             _context.SaveChanges();
+        }
+
+        public PagedList<Category> GetCategories(QueryOptions options)
+        {
+            return new PagedList<Category>(_context.Categories, options);
         }
     }
 }

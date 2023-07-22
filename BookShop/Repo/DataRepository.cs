@@ -14,6 +14,17 @@ namespace BookShop.Repo
 
         public IEnumerable<Book> Books => _context.Books.Include(x => x.Category);
 
+        public PagedList<Book> GetBooks(QueryOptions options, int categoryId = 0)
+        {
+            IQueryable<Book> query = _context.Books.Include(x => x.Category);
+            if(categoryId != 0)
+            {
+                query = query.Where(x => x.CategoryId == categoryId);
+            }
+
+            return new PagedList<Book>(query, options);
+        }
+
         public void AddBook(Book book)
         {
             _context.Books.Add(book);
@@ -27,11 +38,6 @@ namespace BookShop.Repo
         }
 
         public Book GetBook(int key) => _context.Books.Include(x => x.Category).First(x=>x.Id == key);
-
-        public PagedList<Book> GetBooks(QueryOptions options)
-        {
-            return new PagedList<Book>(_context.Books.Include(b => b.Category), options);
-        }
 
         public void UpdateAll(Book[] books)
         {

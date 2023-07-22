@@ -30,6 +30,21 @@ namespace BookShop
                 options.EnableSensitiveDataLogging(true);
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
             });
+
+            services.AddDistributedSqlServerCache(options =>
+            {
+                options.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
+                options.SchemaName = "dbo";
+                options.TableName = "SessionData";
+            });
+
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = "BookShopApp.Session";
+                options.IdleTimeout = TimeSpan.FromHours(48);
+                options.Cookie.HttpOnly = false;
+            });
+
             services.AddTransient<IRepository, DataRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
@@ -47,6 +62,7 @@ namespace BookShop
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 
